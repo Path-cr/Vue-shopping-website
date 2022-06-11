@@ -18,6 +18,7 @@
         >
           <li class="cart-list-con1">
             <input
+              @click="checkSelectOrNot(cart)"
               type="checkbox"
               name="chk_list"
               v-model="cart.isChecked"
@@ -31,15 +32,24 @@
             <span class="price">{{ cart.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
+            <a
+              href="javascript:void(0)"
+              class="mins"
+              @click="addShopCartNum(cart, -1, 'mines')"
+              >-</a
+            >
             <input
               autocomplete="off"
               type="text"
               :value="cart.skuNum"
               minnum="1"
               class="itxt"
+              @input="addShopCartNum(cart, $event.target.value, 'input')"
             />
-            <a href="javascript:void(0)" class="plus" @click="cart.skuNum++"
+            <a
+              href="javascript:void(0)"
+              class="plus"
+              @click="addShopCartNum(cart, 1, 'add')"
               >+</a
             >
           </li>
@@ -47,9 +57,12 @@
             <span class="sum">{{ cart.skuPrice * cart.skuNum }}</span>
           </li>
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="delCheckedOptions(index)">删除</a>
+            <a style="cursor: pointer; color: red" class="sindelet" @click="delCheckedOptions(cart.skuId)"
+              >删除</a
+            >
             <br />
-            <a href="#none">移到收藏</a>
+            <br />
+            <a style="cursor: pointer; color: red">移到收藏</a>
           </li>
         </ul>
       </div>
@@ -65,18 +78,18 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a style="cursor: pointer; color: red" @click="delAllCartList">删除选中的商品</a>
+        <a style="cursor: pointer; color: red" >清除下柜商品</a>
+        <a style="cursor: pointer; color: red" >移到我的关注</a>
       </div>
       <div class="money-box">
-        <div class="chosed">已选择 <span>0</span>件商品</div>
+        <div class="chosed">已选择 <span style="color: red">0</span> 件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） :</em>
           <i class="summoney">{{ allPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link to="/trade" class="sum-btn" >结算</router-link>
         </div>
       </div>
     </div>
@@ -85,22 +98,76 @@
 
 <script>
 import { mapGetters } from "vuex";
+import throttle from "lodash/throttle";
 export default {
   name: "ShopCart",
   mounted() {
-    this.getshopCart();
+    this.getShopCart();
   },
   methods: {
-    getshopCart() {
+    getShopCart() {
       this.$store.dispatch("getCartList");
     },
-    checkAllcheckBox(event) {
-      this.allCartInfoList.forEach((item) => {
-        item.isChecked = event.target.checked;
+    addShopCartNum: throttle(async function (cart, operationType, flag) {
+      switch (flag) {
+        case "add":
+         cart.skuNum ++
+          break;
+        case "mines":
+          if (cart.skuNum <= 1) {
+            operationType = 0;
+            alert("数量不能小于1哦!");
+          }else {
+             cart.skuNum --
+          }
+          break;
+        case "input":
+          if(operationType>0){
+            operationType = parseInt(operationType) - cart.skuNum;
+          }else {
+            operationType = 0
+          }
+          break;
+      }
+
+      try {
+        await this.$store.dispatch("getAddCartList", {
+          skuId: cart.skuId,
+          skuNum: operationType,
+        });
+        if(flag=== "input")this.getShopCart();
+      } catch (error) {
+        alert(error);
+      }
+    }, 1000),
+    checkAllcheckBox() {
+      this.allCartInfoList.forEach((cart) => {
+        cart.isChecked = event.target.checked
+        this.checkSelectOrNot(cart)
       });
     },
-    delCheckedOptions(index) {
-      this.allCartInfoList.splice(index, 1)
+    async delCheckedOptions(skuId) {
+       try {
+         await this.$store.dispatch('reqDelCartList', skuId)
+         this.getShopCart()
+       } catch (error) {
+         console.log(error)
+       }
+    },
+    async checkSelectOrNot(cart) {
+      try {
+        await this.$store.dispatch("reqUpdataCartList", {
+          skuId: cart.skuId,
+          isChecked: event.target.checked ? 1 : 0,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    delAllCartList() {
+      this.allCartInfoList.forEach(item => { 
+        if(item.isChecked == 1)  this.delCheckedOptions(item.skuId)
+       })
     }
   },
   computed: {
@@ -115,8 +182,11 @@ export default {
       });
       return sum;
     },
-     isChecks() {
-      return this.allCartInfoList.every((item) => item.isChecked) && this.allCartInfoList.length>0;
+    isChecks() {
+      return (
+        this.allCartInfoList.every((item) => item.isChecked) &&
+        this.allCartInfoList.length > 0
+      );
     },
   },
 };

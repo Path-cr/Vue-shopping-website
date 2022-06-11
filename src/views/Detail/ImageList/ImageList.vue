@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(swiperImg, index) in skuInfo.skuImageList" :key="swiperImg.id" @click="sendIndex(index)">

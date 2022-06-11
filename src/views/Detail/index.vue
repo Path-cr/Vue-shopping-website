@@ -109,7 +109,7 @@
                 >
               </div>
               <div class="add">
-                <a @click="addCart">加入购物车</a>
+                <a @click="addCart" style="cursor: pointer">加入购物车</a>
               </div>
             </div>
           </div>
@@ -390,7 +390,7 @@ export default {
           skuNum: this.stuNum,
         });
         sessionStorage.setItem("skuInfo", JSON.stringify(this.skuInfo))
-        this.$router.push({name: "addCart", params: {stuId: this.$route.params.stuId}, query:this.stuNum});
+        this.$router.push({name: "addCart", params: {stuId: this.$route.params.stuId}, query:{skuNum: this.stuNum}});
       } catch (error) {
         alert(error,"加入购物车失败");
       }

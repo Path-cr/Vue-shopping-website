@@ -5,33 +5,37 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
-            <span>请</span>
-            <router-link to="/login">登录</router-link>
-            <router-link class="register" to="/register">免费注册</router-link>
+          <p v-if="!loginData">
+            <router-link style="color: red" to="/login">登录</router-link>
+            <router-link style="color: red" class="register" to="/register">注册</router-link>
+          </p>
+          <p v-else style="color: red; font-weight: bold" >
+            {{loginData}}
+            &nbsp;&nbsp;
+            <a style="cursor: pointer" @click="loginOut">退出登录</a>
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
+          <router-link to="/center">我的订单</router-link>
           <router-link to="/shopCart">我的购物车</router-link>
-          <a href="###">我的尚品汇</a>
-          <a href="###">尚品汇会员</a>
-          <a href="###">企业采购</a>
-          <a href="###">关注尚品汇</a>
-          <a href="###">合作招商</a>
-          <a href="###">商家后台</a>
+          <a href="#">我的尚品汇</a>
+          <a href="#">尚品汇会员</a>
+          <a href="#">企业采购</a>
+          <a href="#">关注尚品汇</a>
+          <a href="#">合作招商</a>
+          <a href="#">商家后台</a>
         </div>
       </div>
     </div>
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <a class="logo" title="尚品汇" href="###" target="_blank">
-          <img  src="./images/RClogo.png" alt="" />
-        </a>
+        <router-link to="/" class="logo" title="尚品汇">
+          <img src="./images/RClogo.png" alt=""/>
+        </router-link>
       </h1>
       <div class="searchArea">
-        <form action="###" class="searchForm">
+        <form action="#" class="searchForm">
           <input
             type="text"
             id="autocomplete"
@@ -49,10 +53,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
-      keyword: ''
+      keyword: '',
     }
   },
   methods: {
@@ -62,13 +67,30 @@ export default {
       let location = {name: 'search', params:{keyword: this.keyword || undefined}}
       location.query = this.$route.query
       this.$router.push(location)
+    },
+    async loginOut() {
+      try {
+       await this.$store.dispatch("reqLoginOut")
+       await this.$router.push('/home')
+      } catch (error) {
+        console.log(error);
+      }
     }
+    
   },
   mounted() {
     this.$bus.$on('clearInput',() => { 
       this.keyword = ''
      })
-  }
+  },
+  computed: {
+     ...mapState({
+       loginData: state=> state.login.accountData.name
+     }),
+    //  ...mapState(['login'])
+   
+     
+    }
 };
 </script>
 
@@ -124,7 +146,7 @@ export default {
       .logo {
         img {
           width: 135px;
-          margin: 0px 45px;
+          margin: 0 45px;
         }
       }
     }
@@ -140,7 +162,7 @@ export default {
           box-sizing: border-box;
           width: 490px;
           height: 32px;
-          padding: 0px 4px;
+          padding: 0 4px;
           border: 2px solid #ea4a36;
           float: left;
 

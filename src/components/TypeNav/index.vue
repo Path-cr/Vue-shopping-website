@@ -26,7 +26,7 @@
                   }"
                 >
                   <div
-                    class="subitem"
+                    class="subItem"
                     v-for="(c2, index) in c1.categoryChild"
                     :key="c2.categoryId"
                   >
@@ -59,14 +59,14 @@
         </transition>
       </div>
       <nav class="nav">
-        <a href="###">服装城</a>
-        <a href="###">美妆馆</a>
-        <a href="###">尚品汇超市</a>
-        <a href="###">全球购</a>
-        <a href="###">闪购</a>
-        <a href="###">团购</a>
-        <a href="###">有趣</a>
-        <a href="###">秒杀</a>
+        <a href="#">服装城</a>
+        <a href="#">美妆馆</a>
+        <a href="#">尚品汇超市</a>
+        <a href="#">全球购</a>
+        <a href="#">闪购</a>
+        <a href="#">团购</a>
+        <a href="#">有趣</a>
+        <a href="#">秒杀</a>
       </nav>
     </div>
   </div>
@@ -85,7 +85,7 @@ export default {
     };
   },
   mounted() {
-    if (this.$route.path != "/home") {
+    if (this.$route.path !== "/home") {
       this.show = false;
     }
   },
@@ -100,7 +100,7 @@ export default {
     }, 50),
     leaveIndex() {
       this.currentIndex = -1;
-      if (this.$route.path != "/home") {
+      if (this.$route.path !== "/home") {
         this.show = false;
       }
     },
@@ -171,7 +171,6 @@ export default {
       top: 45px;
       width: 210px;
       height: 481px;
-      position: absolute;
       background: whitesmoke;
       z-index: 999;
       color: rgb(14, 13, 13);
@@ -202,7 +201,7 @@ export default {
             top: 0;
             z-index: 9999 !important;
 
-            .subitem {
+            .subItem {
               float: left;
               width: 650px;
               padding: 0 4px 0 8px;
