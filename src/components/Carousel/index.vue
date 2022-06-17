@@ -6,7 +6,7 @@
         v-for="(carousel, index) in carouselList"
         :key="carousel.id"
       >
-        <img :src="carousel.imgUrl" />
+        <img v-lazy="carousel.imgUrl" />
       </div>
       <!-- <div class="swiper-slide">
               <img src="./images/banner2.jpg" />

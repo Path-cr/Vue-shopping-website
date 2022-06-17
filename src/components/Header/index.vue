@@ -1,32 +1,34 @@
 <template>
   <header class="header">
     <!-- 头部的第一行 -->
-    <div class="top">
-      <div class="container">
-        <div class="loginList">
-          <p>尚品汇欢迎您！</p>
-          <p v-if="!loginData">
-            <router-link style="color: red" to="/login">登录</router-link>
-            <router-link style="color: red" class="register" to="/register">注册</router-link>
-          </p>
-          <p v-else style="color: red; font-weight: bold" >
-            {{loginData}}
-            &nbsp;&nbsp;
-            <a style="cursor: pointer" @click="loginOut">退出登录</a>
-          </p>
-        </div>
-        <div class="typeList">
-          <router-link to="/center">我的订单</router-link>
-          <router-link to="/shopCart">我的购物车</router-link>
-          <a href="#">我的尚品汇</a>
-          <a href="#">尚品汇会员</a>
-          <a href="#">企业采购</a>
-          <a href="#">关注尚品汇</a>
-          <a href="#">合作招商</a>
-          <a href="#">商家后台</a>
-        </div>
-      </div>
-    </div>
+  <el-menu 
+    :default-active="activeIndex" 
+    :router=true
+    class="el-menu-demo" 
+    mode="horizontal" 
+    @select="handleSelect"
+    background-color="#545c64"
+    text-color="#fff"
+    active-text-color="#ffd04b">
+  <el-menu-item index="/login" v-if="!loginData">
+    登录
+  </el-menu-item>
+  <el-menu-item index="/login" v-else>
+    {{loginData}}
+  </el-menu-item>
+  <el-submenu index="2">
+    <template slot="title">我的瑞草</template>
+    <el-menu-item index="/center"> 
+      我的订单
+    </el-menu-item>
+    <el-menu-item index="2-2">我的收藏夹</el-menu-item>
+    <el-menu-item index="2-3">免费开店</el-menu-item>
+  </el-submenu>
+  <el-menu-item index="/shopCart">
+    我的购物车
+  </el-menu-item>
+  <el-menu-item index="/register"  v-if="!loginData">注册</el-menu-item>
+</el-menu>
     <!--头部第二行 搜索区域-->
     <div class="bottom">
       <h1 class="logoArea">
@@ -58,6 +60,7 @@ export default {
   data() {
     return {
       keyword: '',
+      activeIndex: '/login',
     }
   },
   methods: {
@@ -75,8 +78,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    }
-    
+    },
+     handleSelect(key, keyPath) {
+        this.$router.push(key)
+      }
   },
   mounted() {
     this.$bus.$on('clearInput',() => { 
@@ -87,54 +92,13 @@ export default {
      ...mapState({
        loginData: state=> state.login.accountData.name
      }),
-    //  ...mapState(['login'])
-   
-     
     }
 };
 </script>
 
 <style lang="less" scoped>
 .header {
-  & > .top {
-    background-color: #eaeaea;
-    height: 30px;
-    line-height: 30px;
-
-    .container {
-      width: 1200px;
-      margin: 0 auto;
-      overflow: hidden;
-
-      .loginList {
-        float: left;
-
-        p {
-          float: left;
-          margin-right: 10px;
-
-          .register {
-            border-left: 1px solid #b3aeae;
-            padding: 0 5px;
-            margin-left: 5px;
-          }
-        }
-      }
-
-      .typeList {
-        float: right;
-
-        a {
-          padding: 0 10px;
-
-          & + a {
-            border-left: 1px solid #b3aeae;
-          }
-        }
-      }
-    }
-  }
-
+ 
   & > .bottom {
     width: 1200px;
     margin: 0 auto;
@@ -163,7 +127,7 @@ export default {
           width: 490px;
           height: 32px;
           padding: 0 4px;
-          border: 2px solid #ea4a36;
+          border: 2px solid #d74c4c;
           float: left;
 
           &:focus {
@@ -174,7 +138,7 @@ export default {
         button {
           height: 32px;
           width: 68px;
-          background-color: #ea4a36;
+          background-color: #d74c4c;
           border: none;
           color: #fff;
           float: left;

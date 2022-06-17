@@ -132,7 +132,7 @@ export default {
 
 <style lang="less" scoped>
 .type-nav {
-  border-bottom: 2px solid #252525;
+  border-bottom: 2px solid #ef6767;
 
   .container {
     width: 1200px;
@@ -143,7 +143,7 @@ export default {
     .all {
       width: 210px;
       height: 45px;
-      background-color: #ea4a36;
+      background-color: #d74c4c;
       line-height: 45px;
       text-align: center;
       color: #fff;
@@ -161,7 +161,7 @@ export default {
         text-decoration: none;
       }
       a:hover {
-        color: rgb(231, 49, 158);
+        color: #ffd04b;
       }
     }
 
@@ -173,7 +173,7 @@ export default {
       height: 481px;
       background: whitesmoke;
       z-index: 999;
-      color: rgb(14, 13, 13);
+      color: rgb(252, 118, 118);
 
       .all-sort-list2 {
         .item {
