@@ -17,7 +17,7 @@
     {{loginData}}
   </el-menu-item>
   <el-submenu index="2">
-    <template slot="title">我的瑞草</template>
+    <template slot="title">我的商城</template>
     <el-menu-item index="/center"> 
       我的订单
     </el-menu-item>

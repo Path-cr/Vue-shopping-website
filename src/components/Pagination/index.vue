@@ -2,10 +2,10 @@
   <div class="pagination">
     <button @click="delPages(1)" v-show="pages > 1">上一页</button>
 
-    <span v-if="pages < 6">
+    <span v-if="pages < total">
       <button
         @click="getIndex(index)"
-        v-for="(item, index) in 6"
+        v-for="(item, index) in total"
         :key="index"
         :class="{ visited: isvisited == index }"
       >
@@ -31,7 +31,7 @@
     <span v-if="pages < allPages - 3">
       <span>....</span>
     </span>
-    <button @click="first(allPages - 1)" v-show="pages < 10">{{ allPages }}</button>
+    <button @click="first(allPages - 1)" v-show="pages < 10 && allPages > total+ 2">{{ allPages }}</button>
     <button @click="delPages(2)" v-show="pages != allPages">下一页</button>
     <h6 style="margin-left: 30px">共 {{ allPages }} 条</h6>
   </div>
