@@ -121,7 +121,7 @@ export default {
         this.$store.dispatch("reqRegister", {
           password: this.temp.password,
           phone: this.temp.phone,
-          code: this.temp.getCode,
+          code: this.getCode,
         });
         this.$router.push("/login");
       } else {
