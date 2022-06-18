@@ -2,8 +2,6 @@
   <header class="header">
     <!-- 头部的第一行 -->
     <el-menu
-      :default-active="activeIndex"
-      :router="true"
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
@@ -12,37 +10,43 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="/login" v-if="!loginData"> 登录 </el-menu-item>
-      <el-submenu index="2" v-else>
-        <template slot="title" ><img class="logo" src="./images/ruicao1.png" alt="" /></template>
+      <el-submenu v-else index="1">
+        <template slot="title">
+          <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          ></el-avatar>
+        </template>
         <el-menu-item index="/center"> 我的订单 </el-menu-item>
-        <el-menu-item index="2-2">我的收藏夹</el-menu-item>
-        <el-menu-item index="2-3">免费开店</el-menu-item>
-        <el-menu-item index="" v-show="loginData" @click="loginOut">退出登录</el-menu-item>
+        <el-menu-item index="2-1">我的收藏夹</el-menu-item>
+        <el-menu-item index="2-2">免费开店</el-menu-item>
+        <el-menu-item index="2-3" v-show="loginData" @click="loginOut"
+          >退出登录</el-menu-item
+        >
       </el-submenu>
-      <el-menu-item index="/shopCart"> 我的购物车 </el-menu-item>
-      <el-menu-item index="/register" v-if="!loginData">注册</el-menu-item>
-    </el-menu>
-    <!--头部第二行 搜索区域-->
-    <div class="bottom">
-      <div class="searchArea">
-        <form action="#" class="searchForm">
-          <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-            v-model="keyword"
-            key="text"
-          />
-          <button
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
+      <el-menu-item v-if="loginData" index="/home">
+        {{ loginData }}
+      </el-menu-item>
+      <el-menu-item v-else index="/register">注册</el-menu-item>
+      <el-menu-item index="/shopcart"> 我的购物车 </el-menu-item>
+
+      <div class="search_el">
+        <el-input
+          size="mini"
+          placeholder="请输入内容"
+          v-model="keyword"
+          class="input-with-select"
+        >
+          <el-button
+            size="mini"
+            slot="append"
+            icon="el-icon-search"
             @click="goSearch"
-          >
-            搜索
-          </button>
-        </form>
+          ></el-button>
+        </el-input>
       </div>
-    </div>
+    </el-menu>
+
+    <!--头部第二行 搜索区域-->
   </header>
 </template>
 
@@ -52,7 +56,7 @@ export default {
   data() {
     return {
       keyword: "",
-      activeIndex: "/login",
+      activeIndex2: "",
     };
   },
   methods: {
@@ -76,6 +80,7 @@ export default {
     },
     handleSelect(key, keyPath) {
       this.$router.push(key);
+      // this.activeIndex2 = key
     },
   },
   mounted() {
@@ -93,56 +98,10 @@ export default {
 
 <style lang="less" scoped>
 .header {
-    .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-  }
-
-  & > .bottom {
-    width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
-
-    .logoArea {
-      float: left;
-    }
-
-    .searchArea {
-      float: right;
-      margin: 35px auto;
-
-      .searchForm {
-        overflow: hidden;
-
-        input {
-          box-sizing: border-box;
-          width: 490px;
-          height: 32px;
-          padding: 0 4px;
-          border: 2px solid #d74c4c;
-          float: left;
-
-          &:focus {
-            outline: none;
-          }
-        }
-
-        button {
-          height: 32px;
-          width: 68px;
-          background-color: #d74c4c;
-          border: none;
-          color: #fff;
-          float: left;
-          cursor: pointer;
-
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-    }
+  margin-bottom: 50px;
+  .search_el {
+    width: 400px;
+    margin: 15px 1000px;
   }
 }
 </style>

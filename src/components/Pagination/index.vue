@@ -89,6 +89,7 @@ export default {
   background-color: orangered;
 }
 .pagination {
+  margin-bottom: 5px;
   button,
   h6 {
     margin: 0 5px;

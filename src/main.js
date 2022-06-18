@@ -5,7 +5,7 @@ import TypeNav from './components/TypeNav'
 import Carousel from './components/Carousel'
 import Pagination from './components/Pagination'
 import * as API from '@/api';
-import {Button, MessageBox, Form, FormItem, Input, Col, Menu, MenuItem , Submenu} from 'element-ui';
+import {Button, MessageBox, Form, FormItem, Input, Col, Menu, MenuItem , Submenu, Avatar} from 'element-ui';
 import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueLazyload, {
@@ -26,6 +26,7 @@ Vue.component(Col.name, Col)
 Vue.component(Menu.name, Menu)
 Vue.component(MenuItem.name, MenuItem)
 Vue.component(Submenu.name, Submenu)
+Vue.component(Avatar.name, Avatar)
 
 import store from './store/index'
 import './mock/mockServer';

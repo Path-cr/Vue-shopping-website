@@ -82,7 +82,7 @@ router.beforeEach( async (to, from, next) => {
     } else {
         let toPath = to.path;
         //判断未登录：去trade、去支付、去支付成功、去个人中心【我的订单、团购订单】
-        if (toPath.indexOf('trade') != -1 || toPath.indexOf('pay') != -1 || toPath.indexOf('center') != -1 || toPath.indexOf('shopCart') != -1) {
+        if (toPath.indexOf('trade') != -1 || toPath.indexOf('pay') != -1 || toPath.indexOf('center') != -1 || toPath.indexOf('shopcart') != -1) {
             //判断未登录：去trade、去支付、去支付成功、去个人中心【我的订单、团购订单】
             //跳转到登录
             next('/login?redirect='+toPath);

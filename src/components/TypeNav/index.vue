@@ -132,7 +132,7 @@ export default {
 
 <style lang="less" scoped>
 .type-nav {
-  border-bottom: 2px solid #ef6767;
+  border-bottom: 2px solid #f44646;
 
   .container {
     width: 1200px;
@@ -143,7 +143,7 @@ export default {
     .all {
       width: 210px;
       height: 45px;
-      background-color: #d74c4c;
+      background-color: #ed4141;
       line-height: 45px;
       text-align: center;
       color: #fff;
@@ -174,6 +174,8 @@ export default {
       background: whitesmoke;
       z-index: 999;
       color: rgb(252, 118, 118);
+      box-shadow: rgb(0 0 0 / 20%) 2px 2px 1px -1px,
+                rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;;
 
       .all-sort-list2 {
         .item {
