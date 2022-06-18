@@ -170,7 +170,7 @@ export default {
       left: 0;
       top: 45px;
       width: 210px;
-      height: 481px;
+      height: 470px;
       background: whitesmoke;
       z-index: 999;
       color: rgb(252, 118, 118);

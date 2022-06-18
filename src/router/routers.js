@@ -14,7 +14,7 @@ export default [
         // name: "shopcart",
         path: '/shopcart',
         component: () => import('../views/ShopCart'),
-        // meta: {show: true}
+        meta: {show: true}
     },
     {
         path: "/pay",
