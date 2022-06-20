@@ -5,7 +5,7 @@
     <!-- <Recommend/>
     <Rank/>
     <Like/> -->
-    <!-- <Floor v-for="(floor, index) in floorList" :key="floor.id" :floorList="floor"/> -->
+    <Floor v-for="(floor, index) in floorList" :key="floor.id" :floorInfo="floor"/>
     <Brand />
   </div>
 </template>
@@ -13,12 +13,14 @@
 <script>
 import ListContainer from "./ListContainer/index.vue";
 import Brand from "./Brand/index.vue";
+import Floor from "./Floor/index.vue";
 
 export default {
   name: "home",
   components: {
     ListContainer,
     Brand,
+    Floor
   },
   mounted() {
     this.$store.dispatch("getfloorList");

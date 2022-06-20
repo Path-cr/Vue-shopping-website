@@ -5,9 +5,7 @@
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
+     
     >
       <el-menu-item index="/login" v-if="!loginData"> 登录 </el-menu-item>
       <el-submenu v-else index="1">
@@ -98,7 +96,9 @@ export default {
 
 <style lang="less" scoped>
 .header {
-  margin-bottom: 50px;
+   box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+    rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+  margin-bottom: 15px;
   .search_el {
     width: 400px;
     margin: 15px 1000px;
